@@ -118,9 +118,9 @@ THEMES = {
         },
         # Grade colours: A, B, C, D, E, F
         "grades": [
-            "#2547B8",
-            "#496BCE",
-            "#829BE0",
+            "#25B834",
+            "#ADCE49",
+            "#E082DD",
             "#D99A27",
             "#E47732",
             "#C74747",
