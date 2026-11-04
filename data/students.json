@@ -1,0 +1,62 @@
+[
+    {
+        "id": "ST001",
+        "name": "Amruthesh M",
+        "class": "AIPA",
+        "email": "",
+        "marks": {
+            "Python": 90,
+            "English": 85,
+            "Mathematics": 87,
+            "Computer Science": 91,
+            "Statistics": 80
+        },
+        "created_at": "2026-11-02T15:44:43",
+        "updated_at": "2026-11-02T15:44:43"
+    },
+    {
+        "id": "ST002",
+        "name": "Anamika",
+        "class": "AIPA",
+        "email": "",
+        "marks": {
+            "Python": 89,
+            "English": 59,
+            "Mathematics": 78,
+            "Computer Science": 77,
+            "Statistics": 34
+        },
+        "created_at": "2026-11-02T15:47:14",
+        "updated_at": "2026-11-02T15:47:14"
+    },
+    {
+        "id": "ST003",
+        "name": "Athul",
+        "class": "AIPA",
+        "email": "",
+        "marks": {
+            "Python": 90,
+            "English": 80,
+            "Mathematics": 70,
+            "Computer Science": 60,
+            "Statistics": 40
+        },
+        "created_at": "2026-11-03T20:38:25",
+        "updated_at": "2026-11-03T20:38:25"
+    },
+    {
+        "id": "M",
+        "name": "abhishek.p",
+        "class": "AIPA",
+        "email": "amrutheshmamiyil@gmail.com",
+        "marks": {
+            "Python": 85,
+            "English": 76,
+            "Mathematics": 89,
+            "Computer Science": 100,
+            "Statistics": 98
+        },
+        "created_at": "2026-11-04T16:24:13",
+        "updated_at": "2026-11-04T16:24:13"
+    }
+]
