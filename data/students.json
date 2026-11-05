@@ -58,5 +58,20 @@
         },
         "created_at": "2026-11-05T14:25:02",
         "updated_at": "2026-11-05T14:28:12"
+    },
+    {
+        "id": "ST006",
+        "name": "Hiba",
+        "class": "AIPA",
+        "email": "",
+        "marks": {
+            "Python": 92,
+            "English": 91,
+            "Mathematics": 90,
+            "Computer Science": 94,
+            "Statistics": 95
+        },
+        "created_at": "2026-11-05T14:36:15",
+        "updated_at": "2026-11-05T14:36:15"
     }
 ]
