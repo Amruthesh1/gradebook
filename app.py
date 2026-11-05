@@ -870,6 +870,14 @@ def valid_email(email):
     return bool(re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", email))
 
 
+def valid_name(name):
+    """Names may contain only letters, with single or multiple spaces between words."""
+    return bool(re.fullmatch(r"[A-Za-z]+(?: +[A-Za-z]+)*", name.strip()))
+
+
+NAME_ERROR = "The name can contain only letters and spaces. Remove numbers and special characters."
+
+
 def recommendations(marks):
     """Practical hints shown while marks are being entered."""
     notes = []
@@ -1468,9 +1476,12 @@ def page_add():
             card_title("Student details")
             left, right = st.columns(2)
             with left:
-                student_id = st.text_input("Student ID", key=key("id"), placeholder="e.g. STU001")
+                # The ID is filled in automatically with the next ID in the sequence
+                # and cannot be edited, so every new student gets a valid, unique ID.
                 suggestion = suggest_next_id(students)
-                st.button(f"Use {suggestion}", key="use_id", on_click=set_state, args=(key("id"), suggestion))
+                st.session_state[key("id")] = suggestion
+                student_id = st.text_input("Student ID", key=key("id"), disabled=True)
+                st.caption("The next ID is assigned automatically.")
             with right:
                 name = st.text_input("Full name", key=key("name"), placeholder="e.g. Anjali Menon")
             left, right = st.columns(2)
@@ -1487,6 +1498,9 @@ def page_add():
         existing = search_student(student_id_clean) if student_id_clean else None
         if existing:
             notice("err", f'ID {student_id_clean} is already used by {existing["name"]}. Use a different ID.')
+        name_bad = bool(name.strip()) and not valid_name(name)
+        if name_bad:
+            notice("err", NAME_ERROR)
         email_bad = bool(email.strip()) and not valid_email(email.strip())
         if email_bad:
             notice("warn", "The email address does not look complete. Use the form name@example.com or leave it empty.")
@@ -1502,7 +1516,7 @@ def page_add():
         if missing:
             st.caption("Still needed: " + join_names(missing) + ".")
 
-        if st.button("Save student", type="primary", key="save_add", disabled=bool(missing or existing or email_bad)):
+        if st.button("Save student", type="primary", key="save_add", disabled=bool(missing or existing or email_bad or name_bad)):
             marks = {s: clean_mark(v) for s, v in raw_marks.items()}
             ok, message = add_student(student_id_clean, name, class_name, marks, email)
             if ok:
@@ -1677,6 +1691,9 @@ def page_update():
             card_title("Subject marks", f"Out of 100 for each subject. Pass mark is {PASS_MARK}.")
             raw_marks = marks_inputs(subjects, f"{prefix}_marks", current=old_marks)
 
+        name_bad = bool(name.strip()) and not valid_name(name)
+        if name_bad:
+            notice("err", NAME_ERROR)
         email_bad = bool(email.strip()) and not valid_email(email.strip())
         if email_bad:
             notice("warn", "The email address does not look complete. Use the form name@example.com or leave it empty.")
@@ -1700,7 +1717,7 @@ def page_update():
         elif not changed:
             st.caption("No changes yet. Edit a field to enable saving.")
 
-        if st.button("Save changes", type="primary", key="save_upd", disabled=bool(missing or email_bad or not changed)):
+        if st.button("Save changes", type="primary", key="save_upd", disabled=bool(missing or email_bad or name_bad or not changed)):
             ok, message = update_student(pick, name, class_name, new_marks, email)
             if ok:
                 flash("ok", f'{name.strip()} ({pick}) was updated.')
