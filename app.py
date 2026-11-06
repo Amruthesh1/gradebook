@@ -1647,6 +1647,7 @@ def page_view():
             st.caption(f'Added {report.get("created_at", "n/a")}. Last updated {report.get("updated_at", "n/a")}.')
 
         # ---- Downloadable grade card (PDF) ----
+        st.write("")
         # Built from the same report shown above, so the PDF always matches the screen.
         try:
             pdf_bytes = generate_grade_card_pdf(report, GRADE_BANDS)
