@@ -25,6 +25,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from grade_card import generate_grade_card_pdf, grade_card_filename
 from grade_functions import PASS_MARK, get_student_result
 from student_manager import (
     add_student,
@@ -1644,6 +1645,23 @@ def page_view():
             if failing:
                 notice("err", f"Below the pass mark in {join_names(failing)}.")
             st.caption(f'Added {report.get("created_at", "n/a")}. Last updated {report.get("updated_at", "n/a")}.')
+
+        # ---- Downloadable grade card (PDF) ----
+        # Built from the same report shown above, so the PDF always matches the screen.
+        try:
+            pdf_bytes = generate_grade_card_pdf(report, GRADE_BANDS)
+        except Exception:
+            pdf_bytes = None
+            notice("err", "The grade card PDF could not be created for this record.")
+        if pdf_bytes:
+            st.download_button(
+                "Download Grade Card (PDF)",
+                data=pdf_bytes,
+                file_name=grade_card_filename(report),
+                mime="application/pdf",
+                type="primary",
+                key="dl_gradecard",
+            )
 
 
 def page_update():
